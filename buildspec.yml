@@ -16,7 +16,7 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      #- terraform version
+      - terraform version
       - echo ${TF_ENV}
       - terraform init --backend-config=./env_vars/${TF_ENV}.conf
       - terraform apply -var-file=./env_vars/${TF_ENV}.tfvars -auto-approve
