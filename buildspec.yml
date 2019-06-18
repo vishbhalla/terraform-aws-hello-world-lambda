@@ -6,7 +6,7 @@ env:
 
 phases:
   install:
-    runttime-versions:
+    runtime-versions:
       python: 3.7
     commands:
       - "cd /tmp"
