@@ -22,7 +22,7 @@ data "aws_caller_identity" "current_account_id" {}
 data "archive_file" "lambda" {
   type        = "zip"
   source_dir  = "${path.module}/lambda/"
-  output_path = "${path.module}/lambdas/lambda.zip"
+  output_path = "${path.module}/lambda/lambda.zip"
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
