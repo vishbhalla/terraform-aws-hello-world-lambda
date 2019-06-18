@@ -4,7 +4,6 @@ provider "aws" {
 
 data "terraform_remote_state" "splunk_firehose" {
   backend = "s3"
-
   config {
     bucket  = "${lookup(var.terraform_state, "bucket")}"
     region  = "${var.region}"
@@ -29,14 +28,11 @@ data "aws_iam_policy_document" "lambda_assume_role" {
   statement {
     sid    = "HelloWorldLambdaTrustPolicy"
     effect = "Allow"
-
     actions = [
       "sts:AssumeRole",
     ]
-
     principals {
       type = "Service"
-
       identifiers = [
         "lambda.amazonaws.com",
       ]
