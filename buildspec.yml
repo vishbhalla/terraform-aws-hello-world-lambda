@@ -17,10 +17,8 @@ phases:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
       - terraform version
-      - echo ${TF_ENV}
-#      - terraform init -no-color
-#      - terraform plan -no-color
-#      - terraform apply -no-color
+      - terraform init -no-color --backend-config=./env_vars/${TF_ENV}.conf
+      - terraform apply -no-color -var-file=./env_vars/${TF_ENV}.tfvars -auto-approve
 
   post_build:
     commands:
