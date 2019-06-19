@@ -2,7 +2,7 @@ provider "aws" {
   region  = "${var.region}"
 }
 
-data "terraform_remote_state" "splunk_firehose" {
+data "terraform_remote_state" "state" {
   backend = "s3"
   config {
     bucket  = "${lookup(var.terraform_state, "bucket")}"
