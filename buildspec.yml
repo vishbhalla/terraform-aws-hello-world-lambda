@@ -16,6 +16,8 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
+      - pwd
+      - ls -l
       - terraform version
       - echo ${TF_ENV}
       - terraform init --backend-config=./env_vars/sandbox3.conf
