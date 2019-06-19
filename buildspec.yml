@@ -12,7 +12,7 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      - terraform init --backend-config=./env_vars/${TF_ENV}.conf
+      - TF_LOG=debug terraform init --backend-config=./env_vars/${TF_ENV}.conf
       - terraform apply -var-file=./env_vars/${TF_ENV}.tfvars -auto-approve
 
   post_build:
