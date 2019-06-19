@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    TF_VERSION: "0.11.4"
-
 phases:
   install:
     runtime-versions:
@@ -16,12 +12,8 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      - pwd
-      - ls -l
-      - terraform version
-      - echo ${TF_ENV}
-      - terraform init --backend-config=./env_vars/sandbox3.conf
-      - terraform apply -var-file=./env_vars/sandbox3.tfvars -auto-approve
+      - terraform init --backend-config=./env_vars/${TF_ENV}.conf
+      - terraform apply -var-file=./env_vars/${TF_ENV}.tfvars -auto-approve
 
   post_build:
     commands:
