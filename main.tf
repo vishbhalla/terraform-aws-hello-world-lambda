@@ -18,11 +18,7 @@ terraform {
 
 data "aws_caller_identity" "current_account_id" {}
 
-data "archive_file" "lambda" {
-  type        = "zip"
-  source_dir  = "${path.module}/lambda/"
-  output_path = "${path.module}/lambda/hello_world.zip"
-}
+////////////////////// LAMBDA IAM:
 
 data "aws_iam_policy_document" "lambda_assume_role" {
   statement {
@@ -54,16 +50,6 @@ data "aws_iam_policy_document" "lambda" {
   }
 }
 
-resource "aws_lambda_function" "lambda" {
-  description      = "Hello World Lambda function"
-  filename         = "${join("", data.archive_file.lambda.*.output_path)}"
-  function_name    = "hello_world"
-  role             = "${aws_iam_role.lambda.arn}"
-  handler          = "hello_world.lambda_handler"
-  source_code_hash = "${join("", data.archive_file.lambda.*.output_base64sha256)}"
-  runtime          = "python3.6"
-}
-
 resource "aws_iam_role" "lambda" {
   name               = "hello_world_lambda"
   assume_role_policy = "${data.aws_iam_policy_document.lambda_assume_role.json}"
@@ -77,4 +63,22 @@ resource "aws_iam_policy" "lambda" {
 resource "aws_iam_role_policy_attachment" "lambda" {
   role       = "${aws_iam_role.lambda.name}"
   policy_arn = "${aws_iam_policy.lambda.arn}"
+}
+
+////////////////////// LAMBDA FUNCTION:
+
+data "archive_file" "lambda" {
+  type        = "zip"
+  source_dir  = "${path.module}/lambda/"
+  output_path = "${path.module}/lambda/hello_world.zip"
+}
+
+resource "aws_lambda_function" "lambda" {
+  description      = "Hello World Lambda function"
+  filename         = "${join("", data.archive_file.lambda.*.output_path)}"
+  function_name    = "hello_world"
+  role             = "${aws_iam_role.lambda.arn}"
+  handler          = "hello_world.lambda_handler"
+  source_code_hash = "${join("", data.archive_file.lambda.*.output_base64sha256)}"
+  runtime          = "python3.6"
 }
