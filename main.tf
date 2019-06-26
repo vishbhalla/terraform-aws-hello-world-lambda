@@ -18,20 +18,26 @@ terraform {
 
 data "aws_caller_identity" "current_account_id" {}
 
+module "lambda_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=master"
+  namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  name       = "${var.name}"
+  attributes = ["${compact(concat(var.attributes, list("lambda", var.region)))}"]
+  delimiter  = "${var.delimiter}"
+  tags       = "${var.tags}"
+}
+
 ////////////////////// LAMBDA IAM:
 
 data "aws_iam_policy_document" "lambda_assume_role" {
   statement {
     sid    = "HelloWorldLambdaTrustPolicy"
     effect = "Allow"
-    actions = [
-      "sts:AssumeRole",
-    ]
+    actions = ["sts:AssumeRole"]
     principals {
       type = "Service"
-      identifiers = [
-        "lambda.amazonaws.com",
-      ]
+      identifiers = ["lambda.amazonaws.com"]
     }
   }
 }
@@ -45,18 +51,17 @@ data "aws_iam_policy_document" "lambda" {
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
     ]
-    resources = [
-      "arn:aws:logs:${var.region}:${data.aws_caller_identity.current_account_id.account_id}:*",    ]
+    resources = ["arn:aws:logs:${var.region}:${data.aws_caller_identity.current_account_id.account_id}:*"]
   }
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = "hello_world_lambda"
+  name               = "${module.lambda_label.id}"
   assume_role_policy = "${data.aws_iam_policy_document.lambda_assume_role.json}"
 }
 
 resource "aws_iam_policy" "lambda" {
-  name   = "hello_world_policy"
+  name   = "${module.lambda_label.id}"
   policy = "${data.aws_iam_policy_document.lambda.json}"
 }
 
