@@ -30,8 +30,8 @@ variable stage {
 
 variable attributes {
   description = "Additional attributes (e.g. `policy` or `role`)"
-  type        = "string"
-  default     = ""
+  type        = "list"
+  default     = []
 }
 
 variable delimiter {
@@ -42,6 +42,6 @@ variable delimiter {
 
 variable tags {
   description = "Tags"
-  type        = "string"
-  default     = ""
+  type        = "map"
+  default     = {}
 }
