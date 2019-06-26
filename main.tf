@@ -19,7 +19,7 @@ terraform {
 data "aws_caller_identity" "current_account_id" {}
 
 module "lambda_label" {
-  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=master"
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=0.2.1"
   namespace  = "${var.namespace}"
   stage      = "${var.stage}"
   name       = "${var.name}"
