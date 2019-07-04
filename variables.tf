@@ -1,47 +1,48 @@
 variable "terraform_state" {
   description = "Terraform backend state setup for S3"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "region" {
   description = "AWS region"
-  type        = "string"
+  type        = string
   default     = "eu-west-1"
 }
 
 variable "namespace" {
   description = "Namespace"
-  type        = "string"
+  type        = string
   default     = ""
 }
 
-variable name {
+variable "name" {
   description = "Name (e.g. project name)"
-  type        = "string"
+  type        = string
   default     = ""
 }
 
-variable stage {
+variable "stage" {
   description = "Stage (e.g. environment)"
-  type        = "string"
+  type        = string
   default     = ""
 }
 
-variable attributes {
+variable "attributes" {
   description = "Additional attributes (e.g. `policy` or `role`)"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
-variable delimiter {
+variable "delimiter" {
   description = "Delimiter to be used between `name`, `namespace`, `environment`, etc."
-  type        = "string"
+  type        = string
   default     = "-"
 }
 
-variable tags {
+variable "tags" {
   description = "Tags"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
+
