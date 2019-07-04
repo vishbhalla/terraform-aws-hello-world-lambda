@@ -17,8 +17,7 @@ data "terraform_remote_state" "state" {
   }
 }
 
-data "aws_caller_identity" "current_account_id" {
-}
+data "aws_caller_identity" "current_account_id" {}
 
 module "lambda_label" {
   source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=0.2.1"
