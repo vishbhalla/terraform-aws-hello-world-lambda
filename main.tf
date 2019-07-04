@@ -20,7 +20,7 @@ data "terraform_remote_state" "state" {
 data "aws_caller_identity" "current_account_id" {}
 
 module "lambda_label" {
-  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=0.2.1"
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git"
   namespace  = var.namespace
   stage      = var.stage
   name       = var.name
@@ -88,4 +88,3 @@ resource "aws_lambda_function" "lambda" {
   source_code_hash = join("", data.archive_file.lambda.*.output_base64sha256)
   runtime          = "python3.6"
 }
-
