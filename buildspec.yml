@@ -17,7 +17,7 @@ phases:
 
   post_build:
     commands:
-      - echo "terraform completed on `date`"
+      - echo "Terraform completed on `date`"
 
 artifacts:
   files:
